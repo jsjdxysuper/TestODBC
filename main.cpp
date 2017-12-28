@@ -10,43 +10,50 @@
 #include"OdbcWrap.h"
 using namespace::std;
 void testInsert();
+
+/**
+ * 执行批量更新操作
+ */
 int main()
 {
 
-	OdbcWrap odbcW("DM","HLJJHDB","HLJJHDB",false);
+	OdbcWrap odbcW("DM","SYSDBA","SYSDBA",false);
 	odbcW.init();
-	string insertSql = "INSERT INTO HLJJHDB.HLJJHDB.TEST(SID,SNAME,TCHAR,TFLOAT,TINT,TNUMBER,SDATE) VALUES(?,?,?,?,?,?,?)";
+	string insertSql = "INSERT INTO test.TEST.GEN(ID,NAME) VALUES(?,?)";
 	vector<vector<string> >paras;
-	for(int i=0;i<1000;i++)
+	for(int i=0;i<10;i++)
 	{
 		stringstream ss;
 		vector<string>oneRow;
-		ss<<"sid"<<i;
+		ss<<"id"<<i;
 		oneRow.push_back(ss.str());
 		ss.str("");
-		ss<<"sname"<<i;
+		ss<<"name"<<i;
 		oneRow.push_back(ss.str());
-		ss.str("");
-		ss<<"tchar"<<i;
-		oneRow.push_back(ss.str());
-		ss.str("");
-		ss<<"23.0"<<i;
-		oneRow.push_back(ss.str());
-		ss.str("");
-		ss<<i;
-		oneRow.push_back(ss.str());
-		ss.str("");
-		ss<<"32."<<i;
-		oneRow.push_back(ss.str());
-		ss.str("");
-		ss<<"2017-07-12";
-		oneRow.push_back(ss.str());
+//		ss.str("");
+//		ss<<"tchar"<<i;
+//		oneRow.push_back(ss.str());
+//		ss.str("");
+//		ss<<"23.0"<<i;
+//		oneRow.push_back(ss.str());
+//		ss.str("");
+//		ss<<i;
+//		oneRow.push_back(ss.str());
+//		ss.str("");
+//		ss<<"32."<<i;
+//		oneRow.push_back(ss.str());
+//		ss.str("");
+//		ss<<"2017-07-12";
+//		oneRow.push_back(ss.str());
 		//cout<<endl<<oneRow.at(0)<<"	"<<oneRow.at(1)<<"	"<<oneRow.at(2)<<"	"<<oneRow.at(3)<<"	"<<oneRow.at(4)<<"	"<<oneRow.at(5)<<" "<<oneRow.at(6)<<endl;
 		paras.push_back(oneRow);
 	}
 	odbcW.execlPrepareUpdate(insertSql,paras);
 	odbcW.commit();
 }
+/**
+ * select查询
+ */
 void testSelect()
 {
 	OdbcWrap odbcW("DM","HLJJHDB","HLJJHDB",false);
